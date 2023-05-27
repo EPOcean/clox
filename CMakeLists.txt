@@ -4,7 +4,9 @@ project(clox LANGUAGES C)
 include(CTest)
 enable_testing()
 
-add_executable(clox main.c chunk.c value.c memory.c debug.c)
+file(GLOB SOURCES ${CMAKE_SOURCE_DIR}/*.c)
+
+add_executable(clox ${SOURCES})
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
