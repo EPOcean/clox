@@ -10,6 +10,8 @@ typedef struct {
   int line;
 } Scanner;
 
+Scanner scanner;
+
 void initScanner(const char* source) {
   scanner.start = source;
   scanner.current = source;
@@ -55,7 +57,7 @@ static Token makeToken(TokenType type) {
   Token token;
   token.type = type;
   token.start = scanner.start;
-  token.length = (int)(scanner.current - scanner.start);
+  token.length = (int)(scanner.current - scanner.start);\
   token.line = scanner.line;
   return token;
 }
@@ -77,7 +79,7 @@ static void skipWhitespace() {
       case '\r':
       case '\t':
         advance();
-        break:
+        break;
       case '\n':
         scanner.line++;
         advance();
@@ -123,7 +125,7 @@ static TokenType identifierType() {
     case 'o': return checkKeyword(1, 1, "r", TOKEN_OR);
     case 'p': return checkKeyword(1, 4, "rint", TOKEN_PRINT);
     case 'r': return checkKeyword(1, 5, "eturn", TOKEN_RETURN);
-    case 's': return checkKeyword(1, 4, "uper", TOKEN_SUPER):
+    case 's': return checkKeyword(1, 4, "uper", TOKEN_SUPER);
     case 't':
       if (scanner.current - scanner.start > 1) {
         switch (scanner.start[1]) {
@@ -172,9 +174,9 @@ static Token string() {
 
 Token scanToken() {
   skipWhitespace();
-  scanner.start + scanner.current;
+  scanner.start = scanner.current;
 
-  if (isATEnd()) return makeToken(TOKEN_EOF);
+  if (isAtEnd()) return makeToken(TOKEN_EOF);
 
   char c = advance();
   if (isAlpha(c)) return identifier();
@@ -209,5 +211,3 @@ Token scanToken() {
 
   return errorToken("Unexpected character.");
 }
-
-Scanner scanner;
